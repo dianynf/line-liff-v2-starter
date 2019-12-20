@@ -1,6 +1,6 @@
-window.onload = function() {
+window.onload = function () {
     const useNodeJS = true;   // if you are not using a node server, set this value to false
-    const defaultLiffId = "";   // change the default LIFF value if you are not using a node server
+    const defaultLiffId = "1653654340-W4Dbz63z";   // change the default LIFF value if you are not using a node server
 
     // DO NOT CHANGE THIS
     let myLiffId = "";
@@ -9,14 +9,14 @@ window.onload = function() {
     // otherwise, pass defaultLiffId
     if (useNodeJS) {
         fetch('/send-id')
-            .then(function(reqResponse) {
+            .then(function (reqResponse) {
                 return reqResponse.json();
             })
-            .then(function(jsonResponse) {
+            .then(function (jsonResponse) {
                 myLiffId = jsonResponse.id;
                 initializeLiffOrDie(myLiffId);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 document.getElementById("liffAppContent").classList.add('hidden');
                 document.getElementById("nodeLiffIdErrorMessage").classList.remove('hidden');
             });
@@ -103,7 +103,7 @@ function displayIsInClientInfo() {
 */
 function registerButtonHandlers() {
     // openWindow call
-    document.getElementById('openWindowButton').addEventListener('click', function() {
+    document.getElementById('openWindowButton').addEventListener('click', function () {
         liff.openWindow({
             url: 'https://line.me',
             external: true
@@ -111,7 +111,7 @@ function registerButtonHandlers() {
     });
 
     // closeWindow call
-    document.getElementById('closeWindowButton').addEventListener('click', function() {
+    document.getElementById('closeWindowButton').addEventListener('click', function () {
         if (!liff.isInClient()) {
             sendAlertIfNotInClient();
         } else {
@@ -120,23 +120,23 @@ function registerButtonHandlers() {
     });
 
     // sendMessages call
-    document.getElementById('sendMessageButton').addEventListener('click', function() {
+    document.getElementById('sendMessageButton').addEventListener('click', function () {
         if (!liff.isInClient()) {
             sendAlertIfNotInClient();
         } else {
             liff.sendMessages([{
                 'type': 'text',
                 'text': "You've successfully sent a message! Hooray!"
-            }]).then(function() {
+            }]).then(function () {
                 window.alert('Message sent');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 window.alert('Error sending message: ' + error);
             });
         }
     });
 
     // scanCode call
-    document.getElementById('scanQrCodeButton').addEventListener('click', function() {
+    document.getElementById('scanQrCodeButton').addEventListener('click', function () {
         if (!liff.isInClient()) {
             sendAlertIfNotInClient();
         } else {
@@ -152,7 +152,7 @@ function registerButtonHandlers() {
     });
 
     // get access token
-    document.getElementById('getAccessToken').addEventListener('click', function() {
+    document.getElementById('getAccessToken').addEventListener('click', function () {
         if (!liff.isLoggedIn() && !liff.isInClient()) {
             alert('To get an access token, you need to be logged in. Please tap the "login" button below and try again.');
         } else {
@@ -163,8 +163,8 @@ function registerButtonHandlers() {
     });
 
     // get profile call
-    document.getElementById('getProfileButton').addEventListener('click', function() {
-        liff.getProfile().then(function(profile) {
+    document.getElementById('getProfileButton').addEventListener('click', function () {
+        liff.getProfile().then(function (profile) {
             document.getElementById('userIdProfileField').textContent = profile.userId;
             document.getElementById('displayNameField').textContent = profile.displayName;
 
@@ -179,13 +179,13 @@ function registerButtonHandlers() {
 
             document.getElementById('statusMessageField').textContent = profile.statusMessage;
             toggleProfileData();
-        }).catch(function(error) {
+        }).catch(function (error) {
             window.alert('Error getting profile: ' + error);
         });
     });
 
     // login call, only when external browser is used
-    document.getElementById('liffLoginButton').addEventListener('click', function() {
+    document.getElementById('liffLoginButton').addEventListener('click', function () {
         if (!liff.isLoggedIn()) {
             // set `redirectUri` to redirect the user to a URL other than the front page of your LIFF app.
             liff.login();
@@ -193,7 +193,7 @@ function registerButtonHandlers() {
     });
 
     // logout call only when external browse
-    document.getElementById('liffLogoutButton').addEventListener('click', function() {
+    document.getElementById('liffLogoutButton').addEventListener('click', function () {
         if (liff.isLoggedIn()) {
             liff.logout();
             window.location.reload();
